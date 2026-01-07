@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Data Nilai Mahasiswa</title>
+    <style>
+        body {
+            background-color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .card {
+            background-color: #dcedc8;
+            border: 1px solid #999;
+            padding: 20px;
+            flex: 1;
+            min-height: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 0;
+            border-bottom: 1px solid #999;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .form-group label {
+            width: 150px;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #777;
+        }
+
+        .buttons {
+            margin-left: 150px;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 5px 15px;
+            cursor: pointer;
+            border: 1px solid #777;
+            background-color: #f5f5f5;
+        }
+
+        .info-text {
+            margin-top: 30px;
+            font-size: 0.85em;
+        }
+
+        .result-item {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .divider {
+            border-bottom: 1px solid #999;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>LATIHAN</h1>
+
+    <div class="container">
+        <div class="card">
+            <h2>DATA NILAI MAHASISWA</h2>
+            
+            <div class="form-group">
+                <label>NIM</label>
+                <input type="text" id="inputNim">
+            </div>
+            <div class="form-group">
+                <label>Nama Mahasiswa</label>
+                <input type="text" id="inputNama">
+            </div>
+            <div class="form-group">
+                <label>Nilai UTS</label>
+                <input type="number" id="inputUts">
+            </div>
+            <div class="form-group">
+                <label>Nilai UAS</label>
+                <input type="number" id="inputUas">
+            </div>
+            <div class="form-group">
+                <label>Nilai Tugas</label>
+                <input type="number" id="inputTugas">
+            </div>
+
+            <div class="buttons">
+                <button onclick="prosesNilai()">Proses</button>
+                <button onclick="batal()">Batal</button>
+            </div>
+
+            <div class="info-text">
+                UTS 30% | UAS 40% | TUGAS 30% <br>
+                85–100 = A | 70–84 = B | 60–69 = C | 40–59 = D | < 40 = E
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>DATA NILAI MAHASISWA</h2>
+            <div id="hasil">
+                <div class="result-item">NIM : <span id="resNim"></span></div>
+                <div class="result-item">Nama Mahasiswa : <span id="resNama"></span></div>
+                <div class="result-item">Nilai UTS : <span id="resUts"></span></div>
+                <div class="result-item">Nilai UAS : <span id="resUas"></span></div>
+                <div class="result-item">Nilai Tugas : <span id="resTugas"></span></div>
+                <div class="result-item">Index : <span id="resIndex"></span></div>
+                <div class="divider"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function prosesNilai() {
+            // Ambil Input
+            const nim = document.getElementById('inputNim').value;
+            const nama = document.getElementById('inputNama').value;
+            const uts = parseFloat(document.getElementById('inputUts').value) || 0;
+            const uas = parseFloat(document.getElementById('inputUas').value) || 0;
+            const tugas = parseFloat(document.getElementById('inputTugas').value) || 0;
+
+            // Hitung Nilai Akhir
+            const nilaiAkhir = (uts * 0.3) + (uas * 0.4) + (tugas * 0.3);
+
+            // Tentukan Index
+            let index = "";
+            if (nilaiAkhir >= 85) index = "A";
+            else if (nilaiAkhir >= 70) index = "B";
+            else if (nilaiAkhir >= 60) index = "C";
+            else if (nilaiAkhir >= 40) index = "D";
+            else index = "E";
+
+            // Tampilkan ke panel kanan
+            document.getElementById('resNim').innerText = nim;
+            document.getElementById('resNama').innerText = nama;
+            document.getElementById('resUts').innerText = uts;
+            document.getElementById('resUas').innerText = uas;
+            document.getElementById('resTugas').innerText = tugas;
+            document.getElementById('resIndex').innerText = index;
+        }
+
+        function batal() {
+            // Reset semua input
+            document.querySelectorAll('input').forEach(input => input.value = "");
+            // Reset semua output
+            document.querySelectorAll('.result-item span').forEach(span => span.innerText = "");
+        }
+    </script>
+</body>
+</html>
